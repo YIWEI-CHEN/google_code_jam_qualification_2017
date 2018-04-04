@@ -9,16 +9,12 @@ Created on Tue Apr  3 16:24:48 2018
 for i in range(1,int(input())+1):
 	s, k = input().split()
 	k = int(k)
-	s = ''.join(map(lambda p: '0' if p == '+' else '1', s))
-	s = int(s, 2)
-	x = int('1' * k, 2)
 	t = 0
-
-	while s:
-		s_len = len('{:b}'.format(s))
-		if s_len - k < 0:
-			t = 'IMPOSSIBLE'
-			break
-		s ^= x << (s_len - k)
-		t += 1
+	for j in range(len(s) - k + 1):
+		# print(s)
+		if s[j] == '-':
+			s = s[:j] + ''.join('-+'[p == '-'] for p in s[j: j + k]) + s[j + k:]
+			t += 1
+	if '-' in s:
+		t = 'IMPOSSIBLE'
 	print('Case #{}: {}'.format(i, t))
